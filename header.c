@@ -2,7 +2,7 @@
 
 void header(int points, int level)
 {
-	printf("******************************************\n");
-	printf("*  points: %d                   level: %d  *\n", points, level);
-	printf("******************************************\n");
+	printf(LINE);
+	printf("*  points: %d                   level: %d  *g
+	printf(LINE);
 }
