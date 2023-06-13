@@ -1,11 +1,15 @@
 #include "snake.h"
 
 /**
- * game_over - print Game over
+ * footer - print Game footer
+ * @mode: game mode
  */
-void game_over(void)
+void footer(int mode)
 {
 	printf(LINE);
-	printf("*                Game Over               *\n");
+	if (mode == IN_GAME)
+		printf("*                 In Game                *\n");
+	else if (mode == GAME_OVER)
+		printf("*                Game Over               *\n");
 	printf(LINE);
 }
