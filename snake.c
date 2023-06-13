@@ -6,6 +6,7 @@ int main()
 	{
 		system("clear");
 		header(1, 1);
+		game_over();
 		sleep(1);
 	}
 	return (0);
