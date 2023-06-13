@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 /**
  * struct position - place in x, y
@@ -36,6 +37,9 @@ typedef struct snake
 } snake_t;
 
 void header(int points, int level);
+void render_food(char (*game_area)[]);
+void game_over();
+
 void playing_area(char **game_area, snake_t snake, position_t food);
 void initialize_game_area(char (*arr)[ROWS + 1]);
 void footer(int mode);
