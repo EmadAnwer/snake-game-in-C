@@ -1,7 +1,7 @@
 #ifndef SNAKE_H
 #define SNAKE_H
-#define ROWS 44
-#define COLUMNS 15
+#define ROWS 15
+#define COLUMNS 44
 #define LINE "******************************************\n"
 #define IN_GAME 1
 #define GAME_OVER 2
@@ -9,6 +9,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+/*dircations*/
+#define LEFT -1
+#define RIGHT 1
+#define UP 2
+#define DOWN -2
 /**
  * struct position - place in x, y
  * @x: x axis
@@ -27,16 +32,17 @@ typedef struct position
  * @tail: snake tail
  * @tall: snake tall
  */
-typedef struct snake
+typedef struct snake_node_s
 {
-	position_t head;
-	position_t tail;
-	position_t next_tail;
-	int tall;
-} snake_t;
+	position_t position;
+	int dircation;
+	struct snake_node_s *next;
+	struct snake_node_s *prev;
+} snake_node_t;
 
 void header(int points, int level);
-void playing_area(char **game_area, snake_t snake, position_t food);
-void initialize_game_area(char (*arr)[ROWS + 1]);
+void playing_area(char (*game_area)[COLUMNS], position_t food);
+snake_node_t *initialize_game(char (*arr)[COLUMNS], position_t food);
 void footer(int mode);
+void move_forward(char (*game_area)[COLUMNS], snake_node_t *head, snake_node_t *tail);
 #endif

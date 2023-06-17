@@ -2,17 +2,22 @@
 
 int main()
 {
-	char game_area[COLUMNS][ROWS + 1];
+	char game_area[ROWS][COLUMNS];
+	snake_node_t *head, *tail;
+	position_t food;
 	int i, j;
-	initialize_game_area(game_area);
+	food.x = 12;
+	food.y = 15;
+	
+	
+	head = initialize_game(game_area, food);
+	tail = head->next;
 	while (1)
 	{
 		system("clear");
 		header(1, 1);
-		for (i = 0; i < COLUMNS; i++)
-			for (j = 0; j < ROWS; j++)
-				printf("%c", game_area[i][j]);
-
+		playing_area(game_area, food);
+		move_forward(game_area, head, tail);
 		footer(IN_GAME);
 		sleep(1);
 	}
