@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 /*dircations*/
 #define LEFT -1
@@ -24,7 +25,7 @@ typedef struct position
 	int x;
 	int y;
 } position_t;
-
+/* New Start */
 
 /**
  * struct position - place in x, y
@@ -41,8 +42,8 @@ typedef struct snake_node_s
 } snake_node_t;
 
 void header(int points, int level);
-void playing_area(char (*game_area)[COLUMNS], position_t food);
-snake_node_t *initialize_game(char (*arr)[COLUMNS], position_t food);
+void playing_area(char **game_area, snake_t snake, position_t food);
+void initialize_game_area(char (*arr)[ROWS + 1]);
 void footer(int mode);
 void move_forward(char (*game_area)[COLUMNS], snake_node_t *head, snake_node_t *tail);
 #endif
