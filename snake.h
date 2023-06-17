@@ -20,7 +20,7 @@ typedef struct position
 	int x;
 	int y;
 } position_t;
-
+/* New Start */
 
 /**
  * struct position - place in x, y
