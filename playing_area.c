@@ -3,15 +3,13 @@
 /**
  * playing_area - print Game over
  */
-void playing_area(char (*game_area)[COLUMNS], position_t food)
+void playing_area(char (*game_area)[COLUMNS], snake_t *snake)
 {
 	int i, j;
-	/*set food position*/
-	game_area[food.x][food.y] = '$';
 
 	for (i = 0; i < ROWS; i++)
-			for (j = 0; j < COLUMNS; j++)
-				printf("%c", game_area[i][j]);
+		for (j = 0; j < COLUMNS; j++)
+			printf("%c", game_area[i][j]);
 }
 
 /**
@@ -19,22 +17,28 @@ void playing_area(char (*game_area)[COLUMNS], position_t food)
  *						  and create border
  * @game_area: 2D array pointer
  */
-snake_node_t *initialize_game(char (*game_area)[COLUMNS], position_t food)
+snake_t *initialize_game(char (*game_area)[COLUMNS], position_t food)
 {
 	int i, j;
-	snake_node_t *head, *tail;
-
-	head = malloc(sizeof(snake_node_t));
-	if (head == NULL)
+	snake_t *snake;
+	snake = malloc(sizeof(snake_t));
+	if (snake == NULL)
 	{
-		perror("can't initialize a snake node");
+		perror("can't initialize a snake");
 		exit(EXIT_FAILURE);
 	}
-	tail = malloc(sizeof(snake_node_t));
-	if (tail == NULL)
+	snake->head = malloc(sizeof(snake_node_t));
+	if (snake->head == NULL)
 	{
-		free(head);
-		perror("can't initialize a snake node");
+		free(snake);
+		perror("can't initialize a head");
+		exit(EXIT_FAILURE);
+	}
+	snake->tail = malloc(sizeof(snake_node_t));
+	if (snake->tail == NULL)
+	{
+		free(snake);
+		perror("can't initialize a tail");
 		exit(EXIT_FAILURE);
 	}
 	for (i = 0; i < ROWS; i++)
@@ -50,18 +54,17 @@ snake_node_t *initialize_game(char (*game_area)[COLUMNS], position_t food)
 				game_area[i][j] = ' ';
 		}
 	/*        #O      */
-	head->dircation = RIGHT;
-	head->next = tail;
-	tail->prev = head;
-	tail->next = NULL;
-	head->prev = NULL;
-	head->position.x = 4;
-	head->position.y = 15;
-	tail->position.x = 4;
-	tail->position.y = 14;
-	game_area[head->position.x][head->position.y] = 'O';
-	game_area[tail->position.x][tail->position.y] = '#';
+	snake->dircation = RIGHT;
+	snake->head->next = snake->tail;
+	snake->tail->prev = snake->head;
+	snake->tail->next = NULL;
+	snake->head->prev = NULL;
+	snake->head->position.x = 4;
+	snake->head->position.y = 15;
+	snake->tail->position.x = 4;
+	snake->tail->position.y = 14;
+	game_area[snake->head->position.x][snake->head->position.y] = 'O';
+	game_area[snake->tail->position.x][snake->tail->position.y] = '#';
 	
-
-	return head;
+	return (snake);
 }

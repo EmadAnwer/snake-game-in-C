@@ -14,10 +14,10 @@ int random_position(int min, int max)
  * render_food - get a random pos between min and max
  * @game_area: 2D array of the game
  */
-void render_food(char (*game_area)[50])
+void render_food(char (*game_area)[COLUMNS], position_t food)
 {
-	int random_x = random_position(0, 14), random_y = random_position(0,43);
-
+	int random_x = random_position(0, ROWS), random_y = random_position(0,43);
+	game_area[food.x][food.y] = ' ';
 	while (game_area[random_x][random_y] != ' ')
 	{
 		random_x = random_position(0, 14);
