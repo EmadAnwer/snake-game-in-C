@@ -6,7 +6,7 @@
  */
 void footer(int mode)
 {
-	printf(LINE);
+	/*printf(LINE);*/
 	if (mode == IN_GAME)
 		printf("*                 In Game                *\n");
 	else if (mode == GAME_OVER)

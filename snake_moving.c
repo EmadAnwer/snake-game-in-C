@@ -8,7 +8,7 @@
  * @snake: snake pointer
  * @food: food pointer
  */
-void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
+void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food, int *points)
 {
 	snake_node_t *current;
 
@@ -19,23 +19,24 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 		current->position.y = current->prev->position.y;
 		current = current->prev;
 	}
-	if (snake->dircation == RIGHT)
+	if (snake->direction == RIGHT)
 		snake->head->position.y++;
-	else if (snake->dircation == LEFT)
+	else if (snake->direction == LEFT)
 		snake->head->position.y--;
-	else if (snake->dircation == UP)
+	else if (snake->direction == UP)
 		snake->head->position.x--;
-	else if (snake->dircation == DOWN)
+	else if (snake->direction == DOWN)
 		snake->head->position.x++;
 
 	if (game_area[snake->head->position.x][snake->head->position.y] == '*')
 	{
 		footer(GAME_OVER);
+		disableRawMode();
 		exit(EXIT_SUCCESS);
 	}
 	else if (game_area[snake->head->position.x][snake->head->position.y] == '$')
 	{
-		increase_snake(game_area, snake);
+		increase_snake(game_area, snake, points);
 		render_food(game_area, food);
 	}
 }
@@ -44,7 +45,7 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
  * @game_area: 2D array of the game
  * @snake: snake pointer
  */
-void increase_snake(char (*game_area)[COLUMNS], snake_t *snake)
+void increase_snake(char (*game_area)[COLUMNS], snake_t *snake, int *points)
 {
 	snake_node_t *new_snake;
 
@@ -64,4 +65,6 @@ void increase_snake(char (*game_area)[COLUMNS], snake_t *snake)
 	new_snake->next = NULL;
 
 	snake->tail = new_snake;
+
+	(*points)++;
 }
