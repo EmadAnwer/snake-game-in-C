@@ -1,27 +1,67 @@
 #include "snake.h"
 
 /**
- * playing_area - print Game over
+ * move_forward - move sanke step forword and check the step
+ *				if food increase snake
+ *				if border '*' game_over
+ * @game_area: min point
+ * @snake: snake pointer
+ * @food: food pointer
  */
-
-void move_forward(char (*game_area)[COLUMNS], snake_node_t *head, snake_node_t *tail)
+void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 {
-	game_area[tail->position.x][tail->position.y] = ' ';
-	tail->position.y = tail->prev->position.y;
-	tail->position.x = tail->prev->position.x;
-	game_area[head->position.x][head->position.y] = '#';
-	if(head->dircation == RIGHT)
-		head->position.y++;
-	else if (head->dircation == LEFT)
-		head->position.y--;
-	else if (head->dircation == UP)
-		head->position.x--;
-	else if (head->dircation == DOWN)
-		head->position.x++;
-	game_area[head->position.x][head->position.y] = 'O';
-	
+	snake_node_t *current;
 
-	
-	
+	current = snake->tail;
+	while (current->prev)
+	{
+		current->position.x = current->prev->position.x;
+		current->position.y = current->prev->position.y;
+		current = current->prev;
+	}
+	if (snake->dircation == RIGHT)
+		snake->head->position.y++;
+	else if (snake->dircation == LEFT)
+		snake->head->position.y--;
+	else if (snake->dircation == UP)
+		snake->head->position.x--;
+	else if (snake->dircation == DOWN)
+		snake->head->position.x++;
 
+	if (game_area[snake->head->position.x][snake->head->position.y] == '*')
+	{
+		footer(GAME_OVER);
+		exit(EXIT_SUCCESS);
+	}
+	else if (game_area[snake->head->position.x][snake->head->position.y] == '$')
+	{
+		increase_snake(game_area, snake);
+		render_food(game_area, food);
+	}
+}
+/**
+ * increase_snake - add new node at the end of the snake
+ * @game_area: 2D array of the game
+ * @snake: snake pointer
+ */
+void increase_snake(char (*game_area)[COLUMNS], snake_t *snake)
+{
+	snake_node_t *new_snake;
+
+	new_snake = malloc(sizeof(snake_node_t));
+	if (new_snake == NULL)
+	{
+		/*TODO Free snake function*/
+		free(snake);
+		perror("can't initialize a head");
+		exit(EXIT_FAILURE);
+	}
+	/*position level*/
+	new_snake->position.x = snake->tail->position.x;
+	new_snake->position.y = snake->tail->position.y;
+	new_snake->prev = snake->tail;
+	snake->tail->next = new_snake;
+	new_snake->next = NULL;
+
+	snake->tail = new_snake;
 }

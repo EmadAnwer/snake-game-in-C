@@ -25,27 +25,38 @@ typedef struct position
 	int x;
 	int y;
 } position_t;
-/* New Start */
 
 /**
- * struct position - place in x, y
- * @head: snake head
- * @tail: snake tail
- * @tall: snake tall
+ * struct snake_node_s - represent each node in snake
+ * @position: snake head
+ * @next: snake next node
+ * @prev: snake prev node
  */
 typedef struct snake_node_s
 {
 	position_t position;
-	int dircation;
 	struct snake_node_s *next;
 	struct snake_node_s *prev;
 } snake_node_t;
-
+/**
+ * struct snake_s - represent snake
+ * @dircation: snake dircation
+ * @head: snake head node
+ * @tail: snake tail node
+ */
+typedef struct snake_s
+{
+	int dircation;
+	snake_node_t *head;
+	snake_node_t *tail;
+} snake_t;
+void print_playing_area_array(char (*game_area)[COLUMNS]);
+void clean_playing_area_array(char (*game_area)[COLUMNS]);
+void render_food(char (*game_area)[COLUMNS], position_t *food);
 void header(int points, int level);
-void playing_area(char (*game_area)[COLUMNS], position_t food);
-snake_node_t *initialize_game(char (*arr)[COLUMNS], position_t food);
-void render_food(char (*game_area)[]);
-void game_over();
+void playing_area(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
+snake_t *initialize_game(char (*game_area)[COLUMNS]);
+void increase_snake(char (*game_area)[COLUMNS], snake_t *snake);
 void footer(int mode);
-void move_forward(char (*game_area)[COLUMNS], snake_node_t *head, snake_node_t *tail);
+void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
 #endif

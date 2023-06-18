@@ -1,23 +1,27 @@
 #include "snake.h"
-
-int main()
+/**
+ * main - Entry point of the program
+ *
+ * Return: 0 on success, non-zero value on failure
+ */
+int main(void)
 {
 	char game_area[ROWS][COLUMNS];
-	snake_node_t *head, *tail;
-	position_t food;
+	snake_t *snake;
+	position_t *food;
 	int i, j;
-	food.x = 12;
-	food.y = 15;
-	
-	
-	head = initialize_game(game_area, food);
-	tail = head->next;
+
+	food = malloc(sizeof(position_t));
+	food->x = 4;
+	food->y = 20;
+
+	snake = initialize_game(game_area);
 	while (1)
 	{
 		system("clear");
 		header(1, 1);
-		playing_area(game_area, food);
-		move_forward(game_area, head, tail);
+		playing_area(game_area, snake, food);
+		move_forward(game_area, snake, food);
 		footer(IN_GAME);
 		sleep(1);
 	}
