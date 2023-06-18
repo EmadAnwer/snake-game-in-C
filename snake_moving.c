@@ -28,7 +28,8 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food, 
 	else if (snake->direction == DOWN)
 		snake->head->position.x++;
 
-	if (game_area[snake->head->position.x][snake->head->position.y] == '*')
+	if (game_area[snake->head->position.x][snake->head->position.y] == '*' ||
+			game_area[snake->head->position.x][snake->head->position.y] == '#')
 	{
 		footer(GAME_OVER);
 		disableRawMode();

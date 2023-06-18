@@ -27,7 +27,7 @@ int main(void)
 		playing_area(game_area, snake, food);
 		move_forward(game_area, snake, food, &points);
 		footer(IN_GAME);
-		usleep(600000);
+		usleep(300000);
 	}
 	pthread_join(keyThread, NULL);
 	disableRawMode();
