@@ -46,12 +46,13 @@ typedef struct snake_s
 	snake_node_t *head;
 	snake_node_t *tail;
 } snake_t;
-
-void render_food(char (*game_area)[COLUMNS], position_t food);
+void print_playing_area_array(char (*game_area)[COLUMNS]);
+void clean_playing_area_array(char (*game_area)[COLUMNS]);
+void render_food(char (*game_area)[COLUMNS], position_t *food);
 void header(int points, int level);
-void playing_area(char (*game_area)[COLUMNS], snake_t *snake);
-snake_t *initialize_game(char (*game_area)[COLUMNS], position_t food);
+void playing_area(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
+snake_t *initialize_game(char (*game_area)[COLUMNS]);
 void increase_snake(char (*game_area)[COLUMNS], snake_t *snake);
 void footer(int mode);
-void move_forward(char (*game_area)[COLUMNS], snake_t *snake);
+void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
 #endif

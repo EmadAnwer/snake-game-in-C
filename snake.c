@@ -4,21 +4,20 @@ int main()
 {
 	char game_area[ROWS][COLUMNS];
 	snake_t *snake;
-	position_t food;
+	position_t *food;
 	int i, j;
 	
-	food.x = 4;
-	food.y = 17;	
-	snake = initialize_game(game_area, food);
-	/*set food position*/
-	game_area[food.x][food.y] = '$';
+	food = malloc(sizeof(position_t));
+	food->x = 4;
+	food->y = 20;	
+	
+	snake = initialize_game(game_area);
 	while (1)
 	{
 		system("clear");
 		header(1, 1);
-		
-		playing_area(game_area, snake);
-		move_forward(game_area, snake);
+		playing_area(game_area, snake, food);
+		move_forward(game_area, snake, food);
 		footer(IN_GAME);
 		sleep(1);
 	}
