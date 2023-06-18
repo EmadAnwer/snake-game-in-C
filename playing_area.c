@@ -1,11 +1,15 @@
 #include "snake.h"
 
 /**
- * playing_area - print Game over
+ * playing_area - print Game area
+ * @game_area: 2D array pointer
+ * @snake: snake pointer
+ * @food: food pointer
  */
 void playing_area(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 {
 	snake_node_t *current;
+
 	clean_playing_area_array(game_area);
 	game_area[food->x][food->y] = '$';
 	game_area[snake->head->position.x][snake->head->position.y] = 'O';
@@ -16,17 +20,19 @@ void playing_area(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 		current = current->next;
 	}
 	print_playing_area_array(game_area);
-	
+
 }
 
 /**
- * initialize_game_area - initialize game_area pointer with spaces
- *						  and create border
+ * initialize_game - initialize game_area pointer with spaces and create border
+ *
  * @game_area: 2D array pointer
+ * Return: snake pointer
  */
 snake_t *initialize_game(char (*game_area)[COLUMNS])
 {
 	snake_t *snake;
+
 	snake = malloc(sizeof(snake_t));
 	if (snake == NULL)
 	{
@@ -47,7 +53,7 @@ snake_t *initialize_game(char (*game_area)[COLUMNS])
 		perror("can't initialize a tail");
 		exit(EXIT_FAILURE);
 	}
-	
+
 	snake->dircation = RIGHT;
 	snake->head->next = snake->tail;
 	snake->tail->prev = snake->head;
@@ -57,27 +63,37 @@ snake_t *initialize_game(char (*game_area)[COLUMNS])
 	snake->head->position.y = 15;
 	snake->tail->position.x = 4;
 	snake->tail->position.y = 14;
-	
+
 	return (snake);
 }
+/**
+ * print_playing_area_array - print Game area
+ * @game_area: 2D array pointer
+ */
 void print_playing_area_array(char (*game_area)[COLUMNS])
 {
 	int i, j;
+
 	for (i = 0; i < ROWS; i++)
 		for (j = 0; j < COLUMNS; j++)
 			printf("%c", game_area[i][j]);
 }
+/**
+ * clean_playing_area_array - assign game area array
+ * @game_area: 2D array pointer
+ */
 void clean_playing_area_array(char (*game_area)[COLUMNS])
 {
 	int i, j;
+
 	for (i = 0; i < ROWS; i++)
 		for (j = 0; j <= COLUMNS; j++)
 		{
-			if(j == COLUMNS - 1)
+			if (j == COLUMNS - 1)
 				game_area[i][j] = '\0';
-			else if(j == COLUMNS - 2)
+			else if (j == COLUMNS - 2)
 				game_area[i][j] = '\n';
-			else if(j == 0 || j == COLUMNS - 3)
+			else if (j == 0 || j == COLUMNS - 3)
 				game_area[i][j] = '*';
 			else
 				game_area[i][j] = ' ';

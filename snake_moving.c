@@ -1,9 +1,13 @@
 #include "snake.h"
 
 /**
- * playing_area - print Game over
+ * move_forward - move sanke step forword and check the step
+ *				if food increase snake
+ *				if border '*' game_over
+ * @game_area: min point
+ * @snake: snake pointer
+ * @food: food pointer
  */
-
 void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 {
 	snake_node_t *current;
@@ -15,7 +19,7 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 		current->position.y = current->prev->position.y;
 		current = current->prev;
 	}
-	if(snake->dircation == RIGHT)
+	if (snake->dircation == RIGHT)
 		snake->head->position.y++;
 	else if (snake->dircation == LEFT)
 		snake->head->position.y--;
@@ -23,26 +27,28 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food)
 		snake->head->position.x--;
 	else if (snake->dircation == DOWN)
 		snake->head->position.x++;
-	
-	if(game_area[snake->head->position.x][snake->head->position.y] == '*')
+
+	if (game_area[snake->head->position.x][snake->head->position.y] == '*')
 	{
 		footer(GAME_OVER);
 		exit(EXIT_SUCCESS);
 	}
-	else if(game_area[snake->head->position.x][snake->head->position.y] == '$')
+	else if (game_area[snake->head->position.x][snake->head->position.y] == '$')
 	{
 		increase_snake(game_area, snake);
 		render_food(game_area, food);
 	}
-	
-
 }
-
+/**
+ * increase_snake - add new node at the end of the snake
+ * @game_area: 2D array of the game
+ * @snake: snake pointer
+ */
 void increase_snake(char (*game_area)[COLUMNS], snake_t *snake)
 {
 	snake_node_t *new_snake;
 
-	new_snake= malloc(sizeof(snake_node_t));
+	new_snake = malloc(sizeof(snake_node_t));
 	if (new_snake == NULL)
 	{
 		/*TODO Free snake function*/
@@ -56,6 +62,6 @@ void increase_snake(char (*game_area)[COLUMNS], snake_t *snake)
 	new_snake->prev = snake->tail;
 	snake->tail->next = new_snake;
 	new_snake->next = NULL;
-	
+
 	snake->tail = new_snake;
 }

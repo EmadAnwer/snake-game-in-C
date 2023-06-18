@@ -25,13 +25,12 @@ typedef struct position
 	int x;
 	int y;
 } position_t;
-/* New Start */
 
 /**
- * struct position - place in x, y
- * @head: snake head
- * @tail: snake tail
- * @tall: snake tall
+ * struct snake_node_s - represent each node in snake
+ * @position: snake head
+ * @next: snake next node
+ * @prev: snake prev node
  */
 typedef struct snake_node_s
 {
@@ -39,7 +38,12 @@ typedef struct snake_node_s
 	struct snake_node_s *next;
 	struct snake_node_s *prev;
 } snake_node_t;
-
+/**
+ * struct snake_s - represent snake
+ * @dircation: snake dircation
+ * @head: snake head node
+ * @tail: snake tail node
+ */
 typedef struct snake_s
 {
 	int dircation;
