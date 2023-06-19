@@ -33,6 +33,8 @@ void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food, 
 	{
 		footer(GAME_OVER);
 		disableRawMode();
+		free_snake(snake);
+		free(food);
 		exit(EXIT_SUCCESS);
 	}
 	else if (game_area[snake->head->position.x][snake->head->position.y] == '$')
@@ -68,4 +70,30 @@ void increase_snake(char (*game_area)[COLUMNS], snake_t *snake, int *points)
 	snake->tail = new_snake;
 
 	(*points)++;
+}
+
+
+/**
+ * free_snake - free memory allocated for the snake
+ * @snake: pointer to the snake to be freed
+ */
+void free_snake(snake_t *snake)
+{
+	snake_node_t *current, *temp;
+
+	if (snake == NULL)
+		return;
+
+	current = snake->head;
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		free(temp);
+	}
+	
+	/*Reset snake pointers*/
+	snake->head = NULL;
+	snake->tail = NULL;
+	free(snake);
 }

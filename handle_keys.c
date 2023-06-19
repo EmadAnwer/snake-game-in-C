@@ -16,6 +16,33 @@ void* handleKeyPress(void* arg)
 			{
 				break;
 			}
+			else if (input == '\033')  /*Escape key (27)*/ 
+			{
+				/*Read additional characters to capture the full escape sequence*/
+				char sequence[2];
+				if (read(STDIN_FILENO, sequence, 2) == 2)
+				{
+					if (sequence[0] == '[')
+					{
+						if (sequence[1] == 'A' && snake->direction != DOWN)  /*Up Arrow*/ 
+						{
+							snake->direction = UP;
+						}
+						else if (sequence[1] == 'B' && snake->direction != UP)  /*Down Arrow*/
+						{
+							snake->direction = DOWN;
+						}
+						else if (sequence[1] == 'D' && snake->direction != RIGHT)  /*Left Arrow*/
+						{
+							snake->direction = LEFT;
+						}
+						else if (sequence[1] == 'C' && snake->direction != LEFT)  /*Right Arrow*/ 
+						{
+							snake->direction = RIGHT;
+						}
+					}
+				}
+			}
 			else if (input == 'w' && snake->direction != DOWN)
 			{
 				snake->direction = UP;
@@ -34,5 +61,5 @@ void* handleKeyPress(void* arg)
 			}
 		}
 	}
-	return (NULL);
+	return NULL;
 }

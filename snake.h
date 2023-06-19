@@ -61,6 +61,7 @@ snake_t *initialize_game(char (*game_area)[COLUMNS]);
 void increase_snake(char (*game_area)[COLUMNS], snake_t *snake, int *points);
 void footer(int mode);
 void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food, int *points);
+void free_snake(snake_t *snake);
 /*---------termenal---------*/
 void enableRawMode();
 void disableRawMode();
