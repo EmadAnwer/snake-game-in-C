@@ -54,7 +54,7 @@ snake_t *initialize_game(char (*game_area)[COLUMNS])
 		exit(EXIT_FAILURE);
 	}
 
-	snake->dircation = RIGHT;
+	snake->direction = RIGHT;
 	snake->head->next = snake->tail;
 	snake->tail->prev = snake->head;
 	snake->tail->next = NULL;
@@ -86,7 +86,8 @@ void clean_playing_area_array(char (*game_area)[COLUMNS])
 {
 	int i, j;
 
-	for (i = 0; i < ROWS; i++)
+	strcpy(game_area[0], LINE);
+	for (i = 1; i < ROWS - 1; i++)
 		for (j = 0; j <= COLUMNS; j++)
 		{
 			if (j == COLUMNS - 1)
@@ -98,4 +99,5 @@ void clean_playing_area_array(char (*game_area)[COLUMNS])
 			else
 				game_area[i][j] = ' ';
 		}
+	strcpy(game_area[ROWS - 1], LINE);
 }

@@ -1,6 +1,6 @@
 #ifndef SNAKE_H
 #define SNAKE_H
-#define ROWS 15
+#define ROWS 17
 #define COLUMNS 44
 #define LINE "******************************************\n"
 #define IN_GAME 1
@@ -9,8 +9,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-
-/*dircations*/
+#include <termios.h>
+#include <pthread.h>
+#include <string.h>
+/*directions*/
 #define LEFT -1
 #define RIGHT 1
 #define UP 2
@@ -46,7 +48,7 @@ typedef struct snake_node_s
  */
 typedef struct snake_s
 {
-	int dircation;
+	int direction;
 	snake_node_t *head;
 	snake_node_t *tail;
 } snake_t;
@@ -56,7 +58,12 @@ void render_food(char (*game_area)[COLUMNS], position_t *food);
 void header(int points, int level);
 void playing_area(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
 snake_t *initialize_game(char (*game_area)[COLUMNS]);
-void increase_snake(char (*game_area)[COLUMNS], snake_t *snake);
+void increase_snake(char (*game_area)[COLUMNS], snake_t *snake, int *points);
 void footer(int mode);
-void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food);
+void move_forward(char (*game_area)[COLUMNS], snake_t *snake, position_t *food, int *points);
+/*---------termenal---------*/
+void enableRawMode();
+void disableRawMode();
+/*---------keys---------*/
+void* handleKeyPress(void* arg);
 #endif
